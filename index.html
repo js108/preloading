@@ -1,0 +1,100 @@
+<html lang="en">
+	<head>
+	    <meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width">
+	    <link rel="stylesheet" href="main.css">
+	    <title>Preloading Animation Script</title>
+	</head>
+<body>
+
+<div class="container">
+    <div class="hero"> <img data-src="otter.jpg" class="lazyload"></div>
+    <div class="preloader"></div>
+</div>
+
+Sometimes small design details drive you crazy, like when a preload animation suddenly cuts out and an image pops in. After reading about <a href="https://www.viget.com/articles/ensuring-css-animations-run-and-stop-gracefully">Viget's Ensure Animation library</a>  —which ensures preload animations cycle fully through their current iterations then stop— I got curious and decided to reverse engineer it.
+<p>
+
+I used jquery and the <a href="https://www.npmjs.com/package/lazysizes">lazysizes library</a> which, among other things, will add a class to your image once it's loaded.
+<p>
+
+The relevant HTML looks like:
+
+<pre>
+&lt;div class="hero"> 
+    &lt;img data-src="otter.jpg" class="lazyload">
+&lt;/div>
+&lt;div class="preloader">&lt;/div>
+</pre>
+<p>
+
+Using <code>data-src</code> to link to the image instead of the usual <code>src</code> is how you tell lazysizes to relate to that image. When lazysizes is done it will leave you with <code>&lt;img data-src="otter.jpg" class="lazyloaded"></code>, having changed the class from <code>lazyload</code> to <code>lazyloaded</code>.
+<p>
+
+This is the CSS:
+
+<pre>
+.hero {
+    z-index: 2; position: absolute; top: 1px; left: 1px;
+    opacity: 0; }
+
+.fade-in {
+    opacity: 1;
+    transition: all .2s ease-in; }
+
+.preloader {
+    z-index: 1; position: absolute; top: 0px; left: 0px; 
+    animation: preloader 1s infinite ease-in-out forwards; }
+</pre>
+<p>
+
+The image's opacity is 0 and it's stacked on top of the preload animation, so to start we only see the animation.
+<p>
+
+And here's our script:
+
+<pre>
+require('lazysizes');
+var $ = require('jquery');
+
+// call the lazy function when lazysizes changes the image class
+$('.hero').bind("DOMSubtreeModified", lazy);
+
+function lazy(){
+
+  // call this function when the animation finishes its current iteration
+  $(".preloader").on('animationiteration webkitAnimationIteration', function(){
+
+    // pause the animation
+    $(this).css("animation-play-state", "paused");
+
+    // add the fade-in class to fade the image in
+    $(".hero").addClass("fade-in");
+  }); 
+}
+</pre>
+<p>
+
+It first listens for lazysizes to change the image class via waiting for a change to any child element of <code>.hero</code>. When the image class changes it calls the <code>lazy</code> function which waits for the end of the current preload animation iteration then calls a function that stops the animation and fades in the image.
+<p>
+
+Overall not too complicated, but I always learn something when I do stuff like this. I was ignorant of the inner workings of CSS animations. I was trying to figure out how Ensure Animation works and when I inspected element and saw the <code>animation-iteration-count</code> counting away it was a bit of a revelation. It seems obvious that if you've got iterations they've got to be counted but I guess I was just so used to HTML-CSS being static that it didn't occur to me. At first I tried to set the iteration count to 0 to stop the animation, which worked on chrome but not safari, then I dug around and found <code>animation-play-state: paused;</code>, which did the trick. 
+<p>
+
+This is just a first pass. There are some things I'd like to clean up. Listening for changes to all child elements of <code>.hero</code> in order to trigger the process seems rife with potential conflicts. Also I noticed if I throttle my internet connection way down lazysides changes the image class before the image is fully loaded, cutting off the animation and presenting us with the classic view of an image inching its way into existence. I'm not sure if that's a bug or I'm just misunderstanding what lazysizes does.
+<p>
+
+I'd like to try cutting lazysizes out and writing the whole process myself. When I have a minute.
+<p>
+
+If you'd like to see the code for this page in all its glory I put it <a href="https://github.com/js108/preload">on github</a>.
+
+<div class="container-sm">
+    <div class="hero"> <img data-src="otter-sm.jpg" class="lazyload"></div>
+    <div class="preloader"></div>
+</div>
+
+<script src="build.js"></script>
+
+</body>
+</html>

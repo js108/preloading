@@ -1,0 +1,77 @@
+body {
+    margin: 0 auto;
+    padding: 0 10px 15px;
+    width: 100%;
+    max-width: 720px;
+    box-sizing: border-box;
+    line-height: 1.5em;
+    letter-spacing: .05em;
+    font-family: Helvetica, sans-serif;
+    font-size: 1.25em;
+    background-color: #eafeea;
+    color: #404040;
+}
+
+a {
+  color: inherit;
+}
+
+pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    margin: 0;
+}
+
+.container {
+    position: relative; 
+    width: 302px;
+    height: 302px;
+    margin: 30px auto;
+}
+
+.container-sm {
+    position: relative; 
+    width: 102px;
+    height: 102px;
+    margin: 30px auto;
+}
+
+.hero {
+    z-index: 2; position: absolute; top: 1px; left: 1px;
+    opacity: 0;
+}
+
+.hero img {
+    width: 99%;
+    border-radius: 50%;
+}
+
+.fade-in {
+    opacity: 1;
+    transition: all .2s ease-in; 
+}
+
+.preloader {
+    width: inherit;
+    height: inherit;
+    z-index: 1; position: absolute; top: 0px; left: 0px;
+    background-color: #333;
+    border-radius: 100%;  
+    animation: preloader 1s infinite ease-in-out forwards;
+}
+
+@keyframes preloader {
+    0% { 
+        transform: scale(0);
+    } 
+
+    95% {
+        transform: scale(.3);
+    }
+
+
+    100% {
+        transform: scale(.3);
+        opacity: 0;
+    }
+}
