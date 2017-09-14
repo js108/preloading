@@ -1,15 +1,18 @@
 body {
-    margin: 0 auto;
-    padding: 0 10px 15px;
-    width: 100%;
-    max-width: 720px;
+    background-color: #01af47;
+    margin: 0;
     box-sizing: border-box;
     line-height: 1.5em;
     letter-spacing: .05em;
     font-family: Helvetica, sans-serif;
     font-size: 1.25em;
-    background-color: #eafeea;
-    color: #404040;
+    color: #fff;
+}
+
+.wrap {
+    margin: 50px auto;
+    width: 100%;
+    max-width: 720px;
 }
 
 a {
@@ -22,22 +25,26 @@ pre {
     margin: 0;
 }
 
+.border {
+    border-top: 5px dotted white;
+}
+
 .container {
     position: relative; 
-    width: 302px;
-    height: 302px;
-    margin: 30px auto;
+    width: 303px;
+    height: 303px;
+    margin: 0 auto;
 }
 
 .container-sm {
     position: relative; 
-    width: 102px;
-    height: 102px;
-    margin: 30px auto;
+    width: 101px;
+    height: 101px;
+    margin: 0 auto;
 }
 
 .hero {
-    z-index: 2; position: absolute; top: 1px; left: 1px;
+    z-index: 2; position: absolute; top: 0px; left: 0px;
     opacity: 0;
 }
 
@@ -55,7 +62,7 @@ pre {
     width: inherit;
     height: inherit;
     z-index: 1; position: absolute; top: 0px; left: 0px;
-    background-color: #333;
+    background-color: #fff;
     border-radius: 100%;  
     animation: preloader 1s infinite ease-in-out forwards;
 }

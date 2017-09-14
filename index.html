@@ -6,12 +6,16 @@
 	    <title>Preloading Animation Script</title>
 	</head>
 <body>
-
-<div class="container">
-    <div class="hero"> <img data-src="otter.jpg" class="lazyload"></div>
-    <div class="preloader"></div>
+<div class="wrap">
+	<div class="container">
+	    <div class="hero"> <img data-src="otter.jpg" class="lazyload"></div>
+	    <div class="preloader"></div>
+	</div>
 </div>
 
+<div class="border"></div>
+
+<div class="wrap">
 Sometimes small design details drive you crazy, like when a preload animation suddenly cuts out and an image pops in. After reading about <a href="https://www.viget.com/articles/ensuring-css-animations-run-and-stop-gracefully">Viget's Ensure Animation library</a>  —which ensures preload animations cycle fully through their current iterations then stop— I got curious and decided to reverse engineer it.
 <p>
 
@@ -35,7 +39,7 @@ This is the CSS:
 
 <pre>
 .hero {
-    z-index: 2; position: absolute; top: 1px; left: 1px;
+    z-index: 2; position: absolute; top: 0px; left: 0px;
     opacity: 0; }
 
 .fade-in {
@@ -88,11 +92,15 @@ I'd like to try cutting lazysizes out and writing the whole process myself. When
 <p>
 
 If you'd like to see the code for this page in all its glory I put it <a href="https://github.com/js108/preloading">on github</a>.
-
-<div class="container-sm">
-    <div class="hero"> <img data-src="otter-sm.jpg" class="lazyload"></div>
-    <div class="preloader"></div>
 </div>
+
+<div class="wrap">
+	<div class="container-sm">
+	    <div class="hero"> <img data-src="otter-sm.jpg" class="lazyload"></div>
+	    <div class="preloader"></div>
+	</div>
+</div>
+
 
 <script src="build.js"></script>
 
