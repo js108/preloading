@@ -17,8 +17,16 @@ body {
     box-sizing: border-box;
 }
 
+.padding-t {
+    padding-top: 50px;
+}
+
 a {
   color: inherit;
+}
+
+h3 {
+    margin-bottom: 0;
 }
 
 pre {
@@ -46,7 +54,8 @@ pre {
 }
 
 .hero {
-    z-index: 2; position: absolute; top: 0px; left: 0px;
+    z-index: 2; 
+    position: absolute; top: 0px; left: 0px;
     opacity: 0;
 }
 

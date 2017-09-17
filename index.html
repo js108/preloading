@@ -94,9 +94,68 @@ I'd like to try cutting lazysizes out and writing the whole process myself. When
 If you'd like to see the code for this page in all its glory I put it <a href="https://github.com/js108/preloading">on github</a>.
 </div>
 
+<div class="wrap padding-t">
+	<div class="container">
+	    <div class="hero"> <img data-src="otter2.jpg" class="lazyload"></div>
+	    <div class="preloader"></div>
+	</div>
+</div>
+
+<div class="wrap">
+<h3>Second Try</h4>
+I'm not too proud to admit when I've done an insanely half-ass job. My first pass had some problems. The issue I mentioned about the fade-in triggering before the image is fully loaded was due to the fact that lazysizes has three states: your image starts off with the class <code>lazyload</code>, when the image begins to load it changes to <code>lazyloading</code>, then when it's fully loaded it changes to <code>lazyloaded</code>. When I used <code>DOMSubtreeModified</code> (which is depreciated BTW) it triggered when the class was changed to <code>lazyloading</code> instead of the desired <code>lazyloaded</code>.
+<p>
+
+Another problem with the original script arises when you include more than one image. Sometimes we like to have more than one image on a webpage. Well the scope of my original script was the famous <em>global</em>. When one image loaded the script ran the fade in and animation pause on all of them.
+<p>
+
+How are we going to solve these problems? Let's go to the code:
+
+<pre>
+// compiles dependancies into build.js with browserify
+require('lazysizes');
+var $ = require('jquery');
+	
+// call the funtion once the image is loaded
+$(".hero img").on("load",function() {
+
+  // traverse to the next preloader element
+  var preloader = $(this).parent().next();
+	
+  // call the function when the animation finishes its current iteration
+  $(preloader).on('animationiteration webkitAnimationIteration', function(){
+
+    // pause the animation
+    $(this).css("animation-play-state", "paused");
+
+    // traverse to the relevant .hero element
+    var hero = $(this).prev();
+	
+    // add the fade-in class to fade the image in
+    $(hero).addClass("fade-in");
+
+  }); 
+
+});	
+</pre>
+<p>
+
+You might expect I would trigger the whole thing by waiting for the <code>lazyloaded</code> class to load. Unfortunately lazysizes was displaying a strange behavior where added a space before the class (<code>class=" lazyloaded"</code>) making it impossible to target. I went with <code>".hero img"</code>, which seems fine but feels a little less to the point.
+<p>
+
+The rest of it involves a lot of traversing around the DOM to target the correct in scope elements. It otherwise functions the same.
+<p>
+
+There are a couple unsolved mysteries left. Firstly the animation always seems to run for a minimum of two cycles even when you'd expect the image to load faster — though this is only true for the image that's in the viewport when you load the page. As you scoll down the images can load faster. The second issue is when I throttle my internet connection the animation stops after its next iteration has begun, which is totally contrary to the whole point of the script. This also only happens to the image that's in the viewport when the page loads.
+<p>
+
+I also feel like I was remiss in not mentioning the key functionality of the lazysizes library is lazy loading, ie loading assets when they're needed. I wrote about it like I was just using it to trigger animation events when really lazy loading is utilized here too.
+
+</div>
+
 <div class="wrap">
 	<div class="container-sm">
-	    <div class="hero"> <img data-src="otter-sm.jpg" class="lazyload"></div>
+	    <div class="hero"> <img data-src="otter3.jpg" class="lazyload"></div>
 	    <div class="preloader"></div>
 	</div>
 </div>
