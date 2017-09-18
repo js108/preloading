@@ -5,7 +5,7 @@ var $ = require('jquery');
 // call the funtion once the image is loaded
 $(".hero img").on("load",function() {
 
-  // traverse to the next preloader element
+  // traverse to the relevant preloader element
   var preloader = $(this).parent().next();
 	
   // call the function when the animation finishes its current iteration

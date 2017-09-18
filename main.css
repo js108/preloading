@@ -17,10 +17,6 @@ body {
     box-sizing: border-box;
 }
 
-.padding-t {
-    padding-top: 50px;
-}
-
 a {
   color: inherit;
 }
@@ -46,12 +42,6 @@ pre {
     margin: 0 auto;
 }
 
-.container-m {
-    position: relative; 
-    width: 202px;
-    height: 202px;
-    margin: 0 auto;
-}
 .container-sm {
     position: relative; 
     width: 101px;
