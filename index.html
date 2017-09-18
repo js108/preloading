@@ -92,13 +92,13 @@ Once our image loads we traverse the DOM to target its corresponding <code>.prel
 Next we use <code>animationiteration</code> to wait for the preload animation to finish its current iteration then call a function that pauses the animation, traverses the DOM back to the image's parent <code>.hero</code> element, and makes the image visible by adding the <code>fade-in</code> class.
 <p>
 
-There are a couple unsolved mysteries left. Firstly the animation always seems to run for a minimum of two cycles even when you'd expect the image to load faster. Though this is only true for the image that's in the viewport when you load the page, as you scroll down the images can load faster. The second issue is when I throttle my internet connection the animation stops after its next iteration has begun, which ruins the whole dang thing. This also only happens to the image that's in the viewport when the page loads.
+There are a couple unsolved mysteries. The animation always seems to run for a minimum of two cycles even when you'd expect the image to load faster. Though this is only true for the image that's in the viewport when you load the page, as you scroll down the images can load faster. The second issue is when I throttle my internet connection the animation stops after its next iteration has begun, which ruins the whole dang thing. This also only happens to the image that's in the viewport when the page loads.
 <p>
 
 Overall it's not too complicated, but I always learn something when I do stuff like this. I was ignorant of the inner workings of CSS animations. I was trying to figure out how Ensure Animation works and when I inspected element and saw the <code>animation-iteration-count</code> counting away it was a bit of a revelation. It seems obvious that if you've got iterations they've got to be counted but I guess I was just so used to HTML-CSS being static that it didn't occur to me. At first I tried to set the iteration count to 0 to stop the animation, which worked on chrome but not safari, then I dug around and found <code>animation-play-state: paused;</code>, which did the trick. 
 <p>
 
-I tried to credit the otter photographers but got lost in endless <em>20 cutest otters on pinterest</em> results. If you took one of these photos please email me joe AT joeschoech DOT com so you can receive all the deserved credit.
+I tried to credit the otter photographers but got lost in endless <em>20 cutest otters on pinterest</em> results. If you took one of these photos please email me joe AT joeschoech DOT com so you can receive all deserved credit.
 <p>
 
 If you'd like to see the code for this page in all its glory I put it <a href="https://github.com/js108/preloading">on github</a>.
