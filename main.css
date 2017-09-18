@@ -13,7 +13,6 @@ body {
     margin: 50px auto;
     width: 100%;
     max-width: 840px;
-    padding: 0 15px;
     box-sizing: border-box;
 }
 
@@ -21,8 +20,8 @@ a {
   color: inherit;
 }
 
-h3 {
-    margin-bottom: 0;
+h1 {
+    line-height: 1.5em;
 }
 
 pre {
